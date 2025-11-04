@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Puntos</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Share Tech Mono', monospace;
+      background: linear-gradient(-45deg, #2b0032, #000000, #2b0032);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    @keyframes gradientFlow {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .table-container {
+      backdrop-filter: blur(12px);
+      background-color: rgba(20, 20, 30, 0.75);
+      border: 2px solid rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+      border-radius: 16px;
+      overflow-y: auto;
+      max-height: 80vh;
+      width: 100%;
+      max-width: 900px;
+      padding: 20px;
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2em;
+      color: white;
+      margin-bottom: 20px;
+      text-shadow: 0 0 2px red, 0 0 4px blue;
+      animation: glitch 1s infinite;
+    }
+
+    @keyframes glitch {
+      0% {text-shadow: 1px 1px red, -1px -1px blue;}
+      20% {text-shadow: -1px -1px red, 1px 1px blue;}
+      40% {text-shadow: 1px -1px red, -1px 1px blue;}
+      60% {text-shadow: -1px 1px red, 1px -1px blue;}
+      80% {text-shadow: 1px 0 red, 0 1px blue;}
+      100% {text-shadow: 0 0 red, 0 0 blue;}
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.05);
+      color: white;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    th {
+      background-color: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    .points {
+      color: #ff5e5e;
+      font-weight: bold;
+    }
+
+    .author {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 0.7em;
+      color: rgba(255,255,255,0.3);
+    }
+
+    @media screen and (max-width: 600px) {
+      th, td {
+        font-size: 0.8em;
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="table-container">
+    <h2>🏆 Tabla de Puntos - Torneo</h2>
+    <table id="scoreTable">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Team</th>
+          <th>Played</th>
+          <th>Won</th>
+          <th>Drawn</th>
+          <th>Lost</th>
+          <th onclick="sortTable()">Points</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div class="author">Made by peanut</div>
+  </div>
+
+  <script>
+    const data = [
+      { team: "Chodemen", played: 4, won: 7, drawn: 0, lost: 5, points: 14 },
+      { team: "Anasos", played: 3, won: 2, drawn: 0, lost: 7, points: 4 },
+      { team: "Polludos", played: 0, won: 0, drawn: 0, lost: 0, points: 0 },
+      { team: "Harem Owners", played: 2, won: 6, drawn: 0, lost: 0, points: 12 },
+      { team: "Diddy Party", played: 2, won: 2, drawn: 0, lost: 4, points: 4 },
+      { team: "Champion of All", played: 0, won: 0, drawn: 0, lost: 0, points: 0 },
+      { team: "Vacas Mu", played: 0, won: 0, drawn: 0, lost: 0, points: 0 },
+      { team: "McDonalds", played: 2, won: 4, drawn: 0, lost: 2, points: 8 },
+      { team: "SoulArmy4Ever", played: 1, won: 0, drawn: 0, lost: 3, points: 0 },
+    ];
+
+    function renderTable() {
+      const tableBody = document.getElementById("tableBody");
+      tableBody.innerHTML = "";
+      data.forEach((team, index) => {
+        tableBody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${team.team}</td>
+            <td>${team.played}</td>
+            <td>${team.won}</td>
+            <td>${team.drawn}</td>
+            <td>${team.lost}</td>
+            <td class="points">${team.points}</td>
+          </tr>
+        `;
+      });
+    }
+
+    function sortTable() {
+      data.sort((a, b) => b.points - a.points);
+      renderTable();
+    }
+
+    sortTable();
+  </script>
+</body>
+</html>
